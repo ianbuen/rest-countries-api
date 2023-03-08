@@ -11,6 +11,7 @@ export default function Document() {
       <body>
         <Main className="bg-very-light-gray text-very-dark-blue-2 flex font-nunito-sans" />
         <NextScript />
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.3/flowbite.min.js"></script>
       </body>
     </Html>
   )

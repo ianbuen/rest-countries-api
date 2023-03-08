@@ -14,7 +14,7 @@ export default function App({ Component, pageProps }) {
 
         <Navbar />
         
-        <main className="px-4 py-8">
+        <main className="px-4 py-8 bg-very-light-gray">
           <Component {...pageProps} />
         </main>
       </>

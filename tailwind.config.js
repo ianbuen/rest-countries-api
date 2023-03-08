@@ -6,6 +6,7 @@ module.exports = {
   mode: 'jit',
   content: [
     "./node_modules/flowbite-react/**/*.js",
+    "./node_modules/flowbite/**/*.js",
     "./src/pages/**/*.{js,jsx}",
     "./src/components/**/*.{js,jsx}",
     "./public/**/*.html",
