@@ -1,6 +1,7 @@
 import Navbar from '@/components/Navbar'
 import '@/styles/globals.css'
 import Head from 'next/head'
+import Script from 'next/script'
 
 export default function App({ Component, pageProps }) {
 
@@ -14,7 +15,7 @@ export default function App({ Component, pageProps }) {
 
         <Navbar />
         
-        <main className="px-4 py-8 bg-very-light-gray">
+        <main className="px-5 py-8 bg-very-light-gray">
           <Component {...pageProps} />
         </main>
       </>

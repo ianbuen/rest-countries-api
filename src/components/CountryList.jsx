@@ -11,19 +11,16 @@ export const CountryList = ({countries}) => {
         router.push('/' + dir);
     }
 
-    if (!countries)
-        return <h1>Loading...</h1>
-
-    return <div className="grid gap-16 px-12">
+    return <div className="grid gap-16 px-8">
         {countries?.map(({name, flags, population, region, capital}, i) => 
-            (<div key={i} className="shadow-lg grid rounded-lg overflow-hidden" onClick={() => viewCountry(name.common)} >
+        (<div key={i} className="grid rounded-lg overflow-hidden" onClick={() => viewCountry(name.common)} >
                 <div className="relative aspect-video">
-                    <Image src={flags.png} alt={flags.alt || `flag of ${name}`} fill />
+                    <Image src={flags.svg} alt={flags.alt || `flag of ${name}`} fill className="object-cover" />
                 </div>
 
-                <div className="grid gap-5 p-8 pb-12">
-                    <h1 className="font-bold text-2xl">{name.official}</h1>
-                    <div className="grid gap-1 text-lg">
+                <div className="grid gap-5 p-6 pb-8">
+                    <h1 className="font-bold text-xl">{name.official}</h1>
+                    <div className="grid gap-1">
                         <p><span className="font-semibold">Population: </span>{(population).toLocaleString("en-US")}</p>
                         <p><span className="font-semibold">Region: </span>{region}</p>
                         <p><span className="font-semibold">Capital: </span>{capital}</p>
