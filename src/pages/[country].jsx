@@ -40,10 +40,11 @@ const CountryDetails = ({ country }) => {
     capital, tld, currencies, languages,
   } = country;
 
+
   const getNativeName = () => {
     const { nativeName } = name;
     const key = _.findKey(nativeName);
-    return nativeName[key]["common"];
+    return _.isEmpty(nativeName) ? 'None' : nativeName[key]["common"];
   };
 
   const getCurrencies = () => {
@@ -68,7 +69,7 @@ const CountryDetails = ({ country }) => {
   return (
     <div className="grid gap-8">
       <div className="relative w-full aspect-video bg-green-300">
-        <Image src={flags.svg} alt={`flag of ${country.name.common}`} fill className="object-cover object-left" />
+        <Image src={flags.svg} alt={`flag of ${name.common}`} fill className="object-cover object-left" />
       </div>
 
       <h1 className="font-bold text-2xl pt-3">{name.common}</h1>
@@ -78,7 +79,7 @@ const CountryDetails = ({ country }) => {
         <p><span>Population:</span> {population.toLocaleString()}</p>
         <p><span>Region:</span> {region}</p>
         <p><span>Sub Region:</span> {subregion}</p>
-        <p><span>Capital:</span> {capital}</p>
+        <p><span>Capital:</span> {capital.length ? capital : 'None'}</p>
         <hr className="border-none py-2" />
         <p><span>Top Level Domain:</span> {getTLDs()}</p>
         <p><span>Currencies:</span> {getCurrencies()}</p>
@@ -110,9 +111,10 @@ export const getStaticPaths = async () => {
   const res = await fetch('https://restcountries.com/v3.1/all?fields=name');
   const countries = await res.json();
 
-  const paths = countries.map(country => ({
-    params: { country: _.kebabCase(country.name.common) },
-  }));
+  const paths = countries.map(country => {
+    let path = country.name.common.toLowerCase();
+    return { params: { country: _.kebabCase(path) } };
+  });
 
   return { paths, fallback: false };
 };
@@ -124,16 +126,11 @@ export async function getStaticProps(context) {
   let query = _.replace(country, '-', ' ');
   query = _.startCase(query);
 
-  console.log('QUERY', query);
-
   let data = null;
 
   await fetch(`https://restcountries.com/v3.1/name/${query}?fields=flags,name,population,region,subregion,capital,tld,currencies,languages,borders`)
         .then((res) => res.json())
-        .then((json) => {
-          return data = _.find(json, item => item.name.common === query)
-        });
-
+        .then((json) => data = _.find(json, item => item.name.common.toUpperCase() === query.toUpperCase()));
   return {
     props: { 'country': data },
   }

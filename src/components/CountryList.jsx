@@ -23,7 +23,7 @@ export const CountryList = ({countries}) => {
                     <div className="grid gap-1">
                         <p><span className="font-semibold">Population: </span>{(population).toLocaleString("en-US")}</p>
                         <p><span className="font-semibold">Region: </span>{region}</p>
-                        <p><span className="font-semibold">Capital: </span>{capital}</p>
+                        <p><span className="font-semibold">Capital: </span>{capital.length ? capital : 'None'}</p>
                     </div>
                 </div>
             </div>)

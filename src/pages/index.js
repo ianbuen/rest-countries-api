@@ -11,13 +11,11 @@ export default function Home({countries, regions}) {
   const refFilter = useRef(null);
   const refSearch = useRef(null);
 
-  const state = useState({
-    keywords: null,
-    region: null
-  }); 
+  const state = useState({ keywords: null, region: null }); 
+  const [{ keywords, region }] = state;
 
   useEffect(() => {
-    console.log(state);
+
   }, [state])
   
 
@@ -25,7 +23,7 @@ export default function Home({countries, regions}) {
     <div className="grid gap-10">
       <Searchbar ref={refSearch} state={state} />
       <Dropdown ref={refFilter} items={[null, ...regions]} state={state} />
-      <CountryList countries={countries} />
+      <CountryList countries={!region ? countries : countries.filter(country => country.region === region)} />
     </div>
   </>
 }
