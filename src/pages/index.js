@@ -4,13 +4,27 @@ import Searchbar from "@/components/Searchbar";
 import path from "path";
 import fs from "fs";
 import _ from "lodash";
+import { useEffect, useRef, useState } from "react";
 
 export default function Home({countries, regions}) {
 
+  const refFilter = useRef(null);
+  const refSearch = useRef(null);
+
+  const state = useState({
+    keywords: null,
+    region: null
+  }); 
+
+  useEffect(() => {
+    console.log(state);
+  }, [state])
+  
+
   return <>
     <div className="grid gap-10">
-      <Searchbar />
-      <Dropdown items={regions} />
+      <Searchbar ref={refSearch} state={state} />
+      <Dropdown ref={refFilter} items={[null, ...regions]} state={state} />
       <CountryList countries={countries} />
     </div>
   </>
@@ -63,6 +77,6 @@ export const getStaticProps = async () => {
     }); 
 
   return {
-    props: { 'countries': countries.slice(0, 50), regions }
+    props: { 'countries': countries, regions }
   }
 };

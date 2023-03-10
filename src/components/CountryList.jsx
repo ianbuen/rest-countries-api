@@ -11,7 +11,7 @@ export const CountryList = ({countries}) => {
         router.push('/' + dir);
     }
 
-    return <div className="grid gap-12 px-8">
+    return <div className="grid gap-12 px-7">
         {countries?.map(({name, flags, population, region, capital}, i) => 
         (<div key={i} className="grid rounded-lg overflow-hidden shadow-lg" onClick={() => viewCountry(name.common)} >
                 <div className="relative aspect-video">
