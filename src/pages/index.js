@@ -8,7 +8,7 @@ import Script from "next/script";
 export default function Home({countries, regions}) {
 
   return <>
-    <div className="grid gap-12">
+    <div className="grid gap-10">
       <Searchbar />
       <Dropdown items={regions} />
       <CountryList countries={countries} />

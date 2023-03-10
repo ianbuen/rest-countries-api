@@ -11,9 +11,9 @@ export const CountryList = ({countries}) => {
         router.push('/' + dir);
     }
 
-    return <div className="grid gap-16 px-8">
+    return <div className="grid gap-12 px-8">
         {countries?.map(({name, flags, population, region, capital}, i) => 
-        (<div key={i} className="grid rounded-lg overflow-hidden" onClick={() => viewCountry(name.common)} >
+        (<div key={i} className="grid rounded-lg overflow-hidden shadow-lg" onClick={() => viewCountry(name.common)} >
                 <div className="relative aspect-video">
                     <Image src={flags.svg} alt={flags.alt || `flag of ${name}`} fill className="object-cover" />
                 </div>

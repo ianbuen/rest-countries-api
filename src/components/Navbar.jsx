@@ -2,7 +2,7 @@ import { BsMoon } from "react-icons/bs";
 
 export const Navbar = () => {
   return (
-    <nav className="flex justify-between px-5 py-10">
+    <nav className="relative flex justify-between px-5 py-8 shadow">
       <h1 className="font-bold text-lg">Where in the world?</h1>
       
       <button className="flex items-center font-semibold">
