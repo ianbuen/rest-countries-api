@@ -1,30 +1,14 @@
 import BackButton from "@/components/BackButton";
 import Image from "next/image";
-import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import _ from "lodash";
-import { AiOutlineLoading3Quarters, IconName } from "react-icons/ai";
+import { AiOutlineLoading3Quarters } from "react-icons/ai";
 
-export const Country = () => {
-  const [data, setData] = useState(null);
-  const router = useRouter();
-  const { country } = router.query;
-
-  useEffect(() => {
-    const getData = async () => {
-      await
-        fetch(`https://restcountries.com/v3.1/name/${country}?fields=flags,name,population,region,subregion,capital,tld,currencies,languages,borders`)
-        .then((res) => res.json())
-        .then((data) => { setData(data[0]); });
-    };
-
-    country && getData();
-  }, [country]);
-
+export const Country = ({ country }) => {
   return (
     <div className="grid gap-y-14">
       <BackButton />
-      <CountryDetails country={data} />
+      <CountryDetails country={country} />
     </div>
   );
 };
@@ -32,19 +16,18 @@ export const Country = () => {
 const CountryDetails = ({ country }) => {
 
   const [borders, setBorders] = useState([]);
-  const [loading, setLoading] = useState(true);
 
   // the API only returns the 3-letter country code of the border countries
   // this effect will make more API fetches to resolve the names of the borders
   useEffect(() => {
     const getBorderNames = async () => {
-      country.borders.forEach(border => {
+      country?.borders.forEach(border => {
         fetch(`https://restcountries.com/v3.1/alpha/${border}?fields=name`)
           .then(res => res.json())
-          .then(({name: {common}}) => setBorders(state => [...state, common]))
+          .then(({name: {common}}) => setBorders(state => _.uniq([...state, common])))
       });
     };
-    country?.borders && !borders.length && getBorderNames();
+    !borders.length && getBorderNames();
   }, [country?.borders])
 
   // 
@@ -77,16 +60,15 @@ const CountryDetails = ({ country }) => {
     let langs = _.values(languages);
     return _.toString(langs).replaceAll(",", ", ");
   };
+  
+  const getTLDs = () => {
+    return _.toString(tld).replaceAll(",", ", ");
+  }
 
   return (
     <div className="grid gap-8">
       <div className="relative w-full aspect-video bg-green-300">
-        <Image
-          src={flags.svg}
-          alt={`flag of ${country.name.common}`}
-          fill
-          className="object-cover object-left"
-        />
+        <Image src={flags.svg} alt={`flag of ${country.name.common}`} fill className="object-cover object-left" />
       </div>
 
       <h1 className="font-bold text-2xl pt-3">{name.common}</h1>
@@ -98,21 +80,61 @@ const CountryDetails = ({ country }) => {
         <p><span>Sub Region:</span> {subregion}</p>
         <p><span>Capital:</span> {capital}</p>
         <hr className="border-none py-2" />
-        <p><span>Top Level Domain:</span> {tld}</p>
+        <p><span>Top Level Domain:</span> {getTLDs()}</p>
         <p><span>Currencies:</span> {getCurrencies()}</p>
         <p><span>Languages:</span> {getLanguages()}</p>
       </div>
 
       <div className="grid gap-4">
         <h2 className="font-semibold text-lg">Border Countries:</h2>
-        <ul className="grid grid-cols-3 gap-4 text-center">
-          {borders?.map(border => <li className="bg-white drop-shadow p-2">
-            {border}
-          </li>)}
-        </ul>
+
+        {borders.length ?
+          <ul className="grid grid-cols-3 gap-x-2 gap-y-3 text-center">
+            {borders.map((border, i) => <li key={i} className="bg-white drop-shadow shadow p-2 rounded-sm overflow-clip">
+              {border}
+            </li>)}
+          </ul> : 
+
+          <p className="text-center">- None -</p>
+        }
       </div>
     </div>
   );
 };
 
 export default Country;
+
+
+export const getStaticPaths = async () => {
+
+  const res = await fetch('https://restcountries.com/v3.1/all?fields=name');
+  const countries = await res.json();
+
+  const paths = countries.map(country => ({
+    params: { country: _.kebabCase(country.name.common) },
+  }));
+
+  return { paths, fallback: false };
+};
+
+
+export async function getStaticProps(context) {
+
+  const { country } = context.params;
+  let query = _.replace(country, '-', ' ');
+  query = _.startCase(query);
+
+  console.log('QUERY', query);
+
+  let data = null;
+
+  await fetch(`https://restcountries.com/v3.1/name/${query}?fields=flags,name,population,region,subregion,capital,tld,currencies,languages,borders`)
+        .then((res) => res.json())
+        .then((json) => {
+          return data = _.find(json, item => item.name.common === query)
+        });
+
+  return {
+    props: { 'country': data },
+  }
+}

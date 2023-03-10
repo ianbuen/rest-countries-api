@@ -3,7 +3,7 @@ import { Dropdown } from "@/components/Dropdown";
 import Searchbar from "@/components/Searchbar";
 import path from "path";
 import fs from "fs";
-import Script from "next/script";
+import _ from "lodash";
 
 export default function Home({countries, regions}) {
 
