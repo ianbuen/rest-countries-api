@@ -30,13 +30,19 @@ module.exports = {
       },
 
       animation: {
-        'slide': '100ms linear slide'
+        'slide': '100ms linear slide',
+        'fadeIn': '300ms linear fadeIn'
       },
 
       keyframes: {
         slide: {
           '0%' : { transform: 'scaleY(0)' },
           '100%' : { transform: 'scaleY(1)' },
+        },
+
+        fadeIn: {
+          '0%' : { opacity: 0 },
+          '100%' : { opacity: 1 },
         }
       }
     },

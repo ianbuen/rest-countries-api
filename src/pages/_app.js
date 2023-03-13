@@ -1,8 +1,9 @@
 import Navbar from '@/components/Navbar'
 import '@/styles/globals.css'
 import Head from 'next/head'
+import Script from 'next/script'
 
-export default function App({ Component, pageProps }) {
+export default function App({ Component, pageProps }) { 
 
   return (
       <>
@@ -16,8 +17,8 @@ export default function App({ Component, pageProps }) {
           <Navbar />
         </header>
         
-        <main className="p-7 h-full">
+        <main className="h-full">
           <Component {...pageProps} />
-        </main>
+        </main> 
       </>
   )}

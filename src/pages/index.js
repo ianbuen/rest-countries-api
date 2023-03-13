@@ -10,20 +10,24 @@ export default function Home({countries, regions}) {
 
   const refFilter = useRef(null);
   const refSearch = useRef(null);
+  const refList = useRef(null);
 
-  const state = useState({ keywords: null, region: null }); 
-  const [{ keywords, region }] = state;
+  const state = useState({ keywords: '', region: null }); 
+  const [{region}] = state;
 
   useEffect(() => {
+    const { classList } = refList.current;
+    classList.add('animate-fadeIn');
+    const timeout = setTimeout(() => classList.remove('animate-fadeIn'), 200);
 
-  }, [state])
-  
+    return () => clearTimeout(timeout);
+  }, [region]) 
 
   return <>
-    <div className="grid gap-10">
+    <div className="grid gap-10 p-7 md:grid-cols-2 xl:px-20 xl:py-14 xl:gap-16">
       <Searchbar ref={refSearch} state={state} />
       <Dropdown ref={refFilter} items={[null, ...regions]} state={state} />
-      <CountryList countries={!region ? countries : countries.filter(country => country.region === region)} />
+      <CountryList ref={refList} countries={countries} state={state} />
     </div>
   </>
 }
@@ -75,6 +79,7 @@ export const getStaticProps = async () => {
     }); 
 
   return {
+    // props: { 'countries': countries.splice(0, 25), regions }
     props: { 'countries': countries, regions }
   }
 };

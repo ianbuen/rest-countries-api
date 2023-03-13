@@ -6,7 +6,7 @@ import { AiOutlineLoading3Quarters } from "react-icons/ai";
 
 export const Country = ({ country }) => {
   return (
-    <div className="grid gap-y-14">
+    <div className="grid gap-y-20 p-10 pb-24 lg:p-20">
       <BackButton />
       <CountryDetails country={country} />
     </div>
@@ -67,38 +67,47 @@ const CountryDetails = ({ country }) => {
   }
 
   return (
-    <div className="grid gap-8">
-      <div className="relative w-full aspect-video bg-green-300">
-        <Image src={flags.svg} alt={`flag of ${name.common}`} fill className="object-cover object-left" />
+    <div className="grid lg:grid-cols-2 md:gap-16 xl:gap-32">
+      <div className="relative w-full aspect-[3/2] md:aspect-video lg:aspect-[3/2] 2xl:aspect-auto">
+        <Image src={flags.png} alt={`flag of ${name.common}`} fill className="object-cover object-left" />
       </div>
 
-      <h1 className="font-bold text-2xl pt-3">{name.common}</h1>
+      <div className="grid gap-8 lg:gap-10">
+        <h1 className="font-bold text-2xl pt-14 xl:text-4xl md:pt-0">{name.common}</h1>
 
-      <div className="grid gap-3 [&_span]:font-semibold">
-        <p><span>Native Name:</span> {getNativeName()}</p>
-        <p><span>Population:</span> {population.toLocaleString()}</p>
-        <p><span>Region:</span> {region}</p>
-        <p><span>Sub Region:</span> {subregion}</p>
-        <p><span>Capital:</span> {capital.length ? capital : 'None'}</p>
-        <hr className="border-none py-2" />
-        <p><span>Top Level Domain:</span> {getTLDs()}</p>
-        <p><span>Currencies:</span> {getCurrencies()}</p>
-        <p><span>Languages:</span> {getLanguages()}</p>
+        <div className="grid gap-12 [&_span]:font-semibold lg:[&_span]:font-bold lg:grid-cols-2">
+          <div className="grid gap-2">
+            <p><span>Native Name:</span> {getNativeName()}</p>
+            <p><span>Population:</span> {population.toLocaleString()}</p>
+            <p><span>Region:</span> {region}</p>
+            <p><span>Sub Region:</span> {subregion}</p>
+            <p><span>Capital:</span> {capital.length ? capital : 'None'}</p>
+          </div>
+
+          <div className="grid auto-rows-min gap-2">
+            <p><span>Top Level Domain:</span> {getTLDs()}</p>
+            <p><span>Currencies:</span> {getCurrencies()}</p>
+            <p><span>Languages:</span> {getLanguages()}</p>
+          </div>
+        </div>
+
+        <div className="grid gap-4 mt-4 lg:my-0 xl:my-8 2xl:grid-cols-[max-content,auto] xl:mb-16">
+          <h2 className="font-semibold text-lg lg:text-base lg:font-bold mt-2">Border Countries:</h2>
+
+          {borders.length ?
+            <ul className="grid grid-cols-3 gap-x-2 gap-y-3 text-center 2xl:grid-cols-4">
+              {borders.map((border, i) => <li key={i} className="bg-white drop-shadow shadow p-2 rounded-sm overflow-clip h-fit">
+                {border}
+              </li>)}
+            </ul> : 
+
+            <p className="text-center mt-2 justify-self-start">- None -</p>
+          }
+        </div>
       </div>
 
-      <div className="grid gap-4">
-        <h2 className="font-semibold text-lg">Border Countries:</h2>
 
-        {borders.length ?
-          <ul className="grid grid-cols-3 gap-x-2 gap-y-3 text-center">
-            {borders.map((border, i) => <li key={i} className="bg-white drop-shadow shadow p-2 rounded-sm overflow-clip">
-              {border}
-            </li>)}
-          </ul> : 
 
-          <p className="text-center">- None -</p>
-        }
-      </div>
     </div>
   );
 };
