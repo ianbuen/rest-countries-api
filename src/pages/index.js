@@ -21,7 +21,7 @@ export default function Home({countries, regions}) {
     const timeout = setTimeout(() => classList.remove('animate-fadeIn'), 200);
 
     return () => clearTimeout(timeout);
-  }, [region]) 
+  }, [state]) 
 
   return <>
     <div className="grid gap-10 p-7 md:grid-cols-2 xl:px-20 xl:py-14 xl:gap-16">

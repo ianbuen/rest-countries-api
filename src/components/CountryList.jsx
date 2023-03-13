@@ -13,10 +13,12 @@ export const CountryList = forwardRef(({countries, state: [{keywords, region}]},
     }
 
     const checkMatch = (a, b) => {
+
         if (b.length < 1)
             return true;
         
-        let string = a.altSpellings.join();
+        const { official, common } = a.name;
+        let string = a.altSpellings.join() + official + common;
         string = string.toLowerCase().replaceAll(' ', '');
         const sub = b.toLowerCase().split(' ');
         return sub.every(word => string.includes(word));
