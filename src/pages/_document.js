@@ -9,7 +9,7 @@ export default function Document() {
         <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;600;800&display=swap" rel="stylesheet" />
       </Head>      
       
-      <body className='font-nunito-sans min-h-screen bg-very-light-gray'>
+      <body className='font-nunito-sans min-h-screen bg-very-light-gray dark:bg-very-dark-blue-1'>
         <Main />
         <NextScript />
       </body>

@@ -39,7 +39,7 @@ export const getStaticProps = async () => {
   let regions = [];
 
   // fetch from API
-  await fetch('https://restcountries.com/v3.1/all?fields=flags,name,population,region,capital')
+  await fetch('https://restcountries.com/v3.1/all?fields=flags,name,population,region,capital,altSpellings')
   
     .then(res => {  // fetch succeeds but unable to get data
       

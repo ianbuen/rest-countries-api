@@ -17,8 +17,9 @@ export const CountryList = forwardRef(({countries, state: [{keywords, region}]},
         if (b.length < 1)
             return true;
         
-        const { official, common } = a.name;
-        let string = a.altSpellings.join() + official + common;
+        const { altSpellings, name: {official, common} } = a;
+        let string = altSpellings?.join() + official + common;
+        console.log(altSpellings);
         string = string.toLowerCase().replaceAll(' ', '');
         const sub = b.toLowerCase().split(' ');
         return sub.every(word => string.includes(word));
