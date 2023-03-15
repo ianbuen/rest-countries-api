@@ -13,7 +13,6 @@ export default function Home({countries, regions}) {
   const refList = useRef(null);
 
   const state = useState({ keywords: '', region: null }); 
-  const [{region}] = state;
 
   useEffect(() => {
     const { classList } = refList.current;

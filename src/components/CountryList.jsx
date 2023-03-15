@@ -33,7 +33,7 @@ export const CountryList = forwardRef(({countries, state: [{keywords, region}]},
             const {name, flags, population, region, capital} = country;
 
             if (checkMatch(country, keywords))
-                return <div key={i} className="grid rounded-lg overflow-hidden shadow-lg cursor-pointer" onClick={() => viewCountry(name.common)} >
+                return <div key={i} className="grid rounded-lg overflow-hidden shadow-lg cursor-pointer dark:bg-dark-blue" onClick={() => viewCountry(name.common)} >
                     <div className="relative aspect-video">
                         <Image src={flags.svg} alt={flags.alt || `flag of ${name}`} fill className="object-cover" />
                     </div>
