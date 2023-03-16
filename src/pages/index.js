@@ -78,7 +78,6 @@ export const getStaticProps = async () => {
     }); 
 
   return {
-    // props: { 'countries': countries.splice(0, 25), regions }
     props: { 'countries': countries, regions }
   }
 };

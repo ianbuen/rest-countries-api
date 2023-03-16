@@ -2,7 +2,7 @@ import BackButton from "@/components/BackButton";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import _ from "lodash";
-import { AiOutlineLoading3Quarters } from "react-icons/ai";
+import { AiOutlineLoading3Quarters as LoadingIcon } from "react-icons/ai";
 
 export const Country = ({ country }) => {
   return (
@@ -32,7 +32,7 @@ const CountryDetails = ({ country }) => {
 
   // 
   if (!country) return <div className="flex justify-center w-full py-20">
-      <AiOutlineLoading3Quarters className="animate-spin text-7xl" />;
+      <LoadingIcon className="animate-spin text-7xl" />;
   </div>
 
   const {
@@ -96,7 +96,7 @@ const CountryDetails = ({ country }) => {
 
           {borders.length ?
             <ul className="grid grid-cols-3 gap-x-2 gap-y-3 text-center 2xl:grid-cols-4">
-              {borders.map((border, i) => <li key={i} className="bg-white drop-shadow shadow p-2 rounded-sm overflow-clip h-fit">
+              {borders.map((border, i) => <li key={i} className="bg-white drop-shadow shadow p-2 rounded-sm overflow-clip h-fit dark:bg-dark-blue">
                 {border}
               </li>)}
             </ul> : 
