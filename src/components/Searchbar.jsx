@@ -13,4 +13,6 @@ export const Searchbar = forwardRef(({state: [{keywords}, setState]}, ref) => {
     </form>
 });
 
+Searchbar.displayName = "Searchbar";
+
 export default Searchbar;

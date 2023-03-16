@@ -38,9 +38,9 @@ export const CountryList = forwardRef(({countries, state}, ref) => {
 
         // refTopButton.current.style.opacity = scroll.current > 100 ? 1 : 0;
         const moreItemsExist = () => scroll.max - scroll.current < 200 && itemsPerBatch < mappedCountries?.length;
-        const timeout = setTimeout(() => setItemsPerBatch(moreItemsExist() ? itemsPerBatch + 25 : itemsPerBatch), 500);
+        const timeout = setTimeout(() => setItemsPerBatch(items => moreItemsExist() ? items + 25 : items), 500);
         return () => clearTimeout(timeout);
-    }, [scroll])
+    }, [scroll, itemsPerBatch, mappedCountries, refTopButton])
 
     // remap countries based on search/filter
     useEffect(() => {
@@ -63,7 +63,7 @@ export const CountryList = forwardRef(({countries, state}, ref) => {
 
         // refresh the list into batches of 25 after filters are set
         setItemsPerBatch(25);
-    }, [state]);
+    }, [state, countries]);
 
     // compare keywords if substring of the names and aliases of the country
     const checkMatch = (a, b) => {
@@ -109,6 +109,8 @@ export const CountryList = forwardRef(({countries, state}, ref) => {
     </>
 });
 
+CountryList.displayName = "CountryList";
+
 const BackToTopButton = forwardRef((props, ref) => {
 
     const classes = "fixed bottom-5 right-5 sm:bottom-10 sm:right-10 z-10 p-5 rounded-full shadow-md drop-shadow-md " +
@@ -120,3 +122,5 @@ const BackToTopButton = forwardRef((props, ref) => {
         <BackToTopIcon />
     </button>
 });
+
+BackToTopButton.displayName = "BackToTopButton";

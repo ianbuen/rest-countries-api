@@ -12,7 +12,10 @@ export default function App({ Component, pageProps }) {
         setDarkMode(true);
         document.documentElement.classList.add('dark');
     }
+
+    console.log(_.kebabCase('Saint Barthélemy'));
   }, [])
+
   
 
   return (
@@ -27,7 +30,7 @@ export default function App({ Component, pageProps }) {
           <Navbar theme={[darkMode, setDarkMode]} />
         </header>
         
-        <main className={`h-full dark:text-white`}>
+        <main className={`grid h-full dark:text-white`}>
           <Component {...pageProps} />
         </main> 
       </>

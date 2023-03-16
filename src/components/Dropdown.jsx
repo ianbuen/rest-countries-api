@@ -23,7 +23,7 @@ export const Dropdown = forwardRef(({items, state: [{region}, setState]}, ref) =
     useEffect(() => {
         // prevent dropdown resizing after selecting, by setting width to fit 'Filter by Region'
         setWidth(ref.current.children[0].offsetWidth);
-    }, [])
+    }, [ref])
 
     const handleClick = () => {
         const { classList : dropdown } = refOptions.current;
@@ -53,5 +53,7 @@ export const Dropdown = forwardRef(({items, state: [{region}, setState]}, ref) =
         <div ref={refClose} className="fixed w-screen h-screen top-0 left-0 z-10 hidden" onClick={handleClick}></div>
     </>
 });
+
+Dropdown.displayName = "Dropdown";
 
 export default Dropdown;
