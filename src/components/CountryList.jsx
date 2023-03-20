@@ -89,7 +89,7 @@ export const CountryList = forwardRef(({countries, state}, ref) => {
                     </div>
 
                     <div className="grid gap-5 p-6 pb-8">
-                        <h1 className="font-bold text-xl">{name.official}</h1>
+                        <h2 className="font-bold text-xl">{name.official}</h2>
                         <div className="grid gap-1">
                             <p><span className="font-semibold">Population: </span>{(population).toLocaleString("en-US")}</p>
                             <p><span className="font-semibold">Region: </span>{region}</p>
@@ -101,7 +101,7 @@ export const CountryList = forwardRef(({countries, state}, ref) => {
     }; 
 
     return <>
-        <div ref={ref} className="grid gap-12 px-7 animate-fadeIn portrait:grid-cols-1 portrait:sm:grid-cols-2 grid-cols-2 md:col-span-2 lg:grid-cols-3 2xl:grid-cols-4 2xl:gap-20 xl:px-0">
+        <div ref={ref} className="grid gap-12 px-7 animate-fadeIn portrait:grid-cols-1 portrait:sm:grid-cols-2 grid-cols-2 md:col-span-2 lg:grid-cols-3 xl:grid-cols-4 2xl:gap-20 xl:px-0">
             <CountryList />
             <BackToTopButton ref={refTopButton} />
         </div>

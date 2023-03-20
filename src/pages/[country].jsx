@@ -71,7 +71,7 @@ const CountryDetails = ({ country }) => {
       </div>
 
       <div className="grid gap-8 lg:gap-10">
-        <h1 className="font-bold text-2xl pt-14 xl:text-4xl md:pt-0">{name?.common}</h1>
+        <h2 className="font-bold text-2xl pt-14 xl:text-4xl md:pt-0">{name?.common}</h2>
 
         <div className="grid gap-12 [&_span]:font-semibold lg:[&_span]:font-bold lg:grid-cols-2">
           <div className="grid gap-2">
