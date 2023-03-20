@@ -1,11 +1,11 @@
 import BackButton from "@/components/BackButton";
 import Image from "next/image";
 import { useEffect, useState } from "react";
-import _, { kebabCase, replace, startCase } from "lodash";
+import _ from "lodash";
 import { AiOutlineLoading3Quarters as LoadingIcon } from "react-icons/ai";
 import Link from "next/link";
 
-export const Country = ({ country }) => { 
+export const Country = ({ country }) => {
 
   return (
     <div className="grid gap-y-20 p-10 pb-24 lg:p-20">
@@ -60,7 +60,7 @@ const CountryDetails = ({ country }) => {
     return _.toString(tld).replaceAll(",", ", ");
   }
 
-  if (!country) return <div className="flex justify-center w-full py-20">
+  if (!country && !borders.length) return <div className="flex justify-center w-full py-20">
       <LoadingIcon className="animate-spin text-7xl" />;
   </div>
 
@@ -127,14 +127,21 @@ export const getStaticPaths = async () => {
 export async function getStaticProps(context) {
 
   const { country } = context.params;
-  let query = replace(country, '-', ' ');
-  query = startCase(query);
+  let query = _.replace(country, '-', ' ');
+  query = _.startCase(query);
 
-  let data = null;
+  // need to check for these special cases, because ie. 'Aland Islands' !== Åland Islands'
+  // searching for 'aland' from the API returns 404
+  const specials = ['Åland Islands', 'Cocos (Keeling) Islands', 'Guinea-Bissau',  'Heard Island and McDonald Islands', 'Saint Barthélemy', 'Saint Helena, Ascension and Tristan da Cunha', 'Timor-Leste'];
+  specials.forEach((item) => {
+    if (_.kebabCase(item) === country)
+        query = item;
+  })
+
+  let data = null; 
 
   await fetch(`https://restcountries.com/v3.1/name/${query}?fields=flags,name,population,region,subregion,capital,tld,currencies,languages,borders`)
         .then((res) => res.json())
-        // .then((json) => console.log(json));
         .then((json) => data = _.find(json, item => _.kebabCase(item.name.common) === _.kebabCase(query)));
   return {
     props: { 'country': data },
