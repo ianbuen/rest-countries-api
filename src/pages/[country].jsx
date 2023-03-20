@@ -4,14 +4,23 @@ import { useEffect, useState } from "react";
 import _ from "lodash";
 import { AiOutlineLoading3Quarters as LoadingIcon } from "react-icons/ai";
 import Link from "next/link";
+import Head from "next/head";
 
 export const Country = ({ country }) => {
 
+  const { name: {common} } = country;
+
   return (
-    <div className="grid gap-y-20 p-10 pb-24 lg:p-20">
-      <BackButton />
-      <CountryDetails country={country} />
-    </div>
+    <>
+      <Head>
+        <title>{common} - REST Countries API</title>
+      </Head>
+
+      <div className="grid gap-y-20 p-10 pb-24 lg:p-20">
+        <BackButton />
+        <CountryDetails country={country} />
+      </div>
+    </>
   );
 };
 
